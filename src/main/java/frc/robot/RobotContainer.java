@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Controller;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ArcadeDrive;
@@ -21,11 +20,16 @@ public class RobotContainer {
   private final Drivebase m_drivebase = new Drivebase();
   private final XboxController driverController = new XboxController(0);
 
-
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+
+    m_drivebase.setDefaultCommand(new ArcadeDrive(
+      m_drivebase,
+      () -> driverController.getLeftY(),
+      () -> driverController.getRightX()
+    ));
   }
 
   /**
