@@ -1,16 +1,12 @@
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
-
+``
 package frc.robot.subsystems;
 
-
-import java.beans.Encoder;
-
 import com.kauailabs.navx.frc.AHRS;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkMax.IdleMode;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
@@ -21,39 +17,23 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DrivebaseConstants;
 
 public class Drivebase extends SubsystemBase {
+  private final PWMTalonSRX leftLeader = new PWMTalonSRX(2); 
+  private final PWMTalonSRX leftFollower = new PWMTalonSRX(3); 
+  private final PWMTalonSRX leftFollowerTwo = new PWMTalonSRX(4); 
+
+  private final PWMTalonSRX rightLeader = new PWMTalonSRX(5); 
+  private final PWMTalonSRX rightFollower = new PWMTalonSRX(6); 
+  private final PWMTalonSRX rightFollowerTwo = new PWMTalonSRX(7); 
+
+  private final DifferentialDrive diffDrive = new DifferentialDrive(leftLeader, rightLeader); 
+  private final DifferentialDriveOdometry  odometry;
+  private final AHRS gyro;
+  private Pose2d currentGoal;
+
+  private final Encoder m_leftEncoder = new Encoder( );
+  private final Encoder m_rightEncoder = new Encoder( );
  
-
-private final PWMTalonSRX leftLeader = new PWMTalonSRX(2); 
-private final PWMTalonSRX leftFollower = new PWMTalonSRX(3); 
-private final PWMTalonSRX leftFollowerTwo = new PWMTalonSRX(4); 
-
-private final PWMTalonSRX rightLeader = new PWMTalonSRX(5); 
-private final PWMTalonSRX rightFollower = new PWMTalonSRX(6); 
-private final PWMTalonSRX rightFollowerTwo = new PWMTalonSRX(7); 
-
-private final DifferentialDrive diffDrive = new DifferentialDrive(leftLeader, rightLeader); 
-private final DifferentialDriveOdometry  odometry;
-private final AHRS gyro;
-private Pose2d currentGoal;
-
-private final Encoder m_leftEncoder = 
-   new Encoder(
-    
-   );
-
-private final Encoder m_rightEncoder = 
-   new Encoder(
-  
-   );
-
-
-  // private final RelativeEncoder m_rightEncoder;
-   //private final RelativeEncoder m_leftEncoder;
- 
-
-
   public Drivebase() {
-
     gyro = new AHRS(SPI.Port.kMXP);
 
     //m_leftEncoder = leftLeader.getEncoder();
@@ -65,7 +45,8 @@ private final Encoder m_rightEncoder =
     rightLeader.setInverted(false);
     rightFollower.setInverted(false);
     rightFollowerTwo.setInverted(false);
-    odometry =  new DifferentialDriveOdometry(gyro.getRotation2d());
+
+    odometry = new DifferentialDriveOdometry(gyro.getRotation2d());
   }
 
   public void arcadeDrive(double speed, double rotation) {
@@ -91,8 +72,7 @@ private final Encoder m_rightEncoder =
     leftLeader.setVoltage(leftVolts);
     rightLeader.setVoltage(rightVolts);
     diffDrive.feed();
-   }
-
+  }
 
    public void resetEncoders() {
     m_leftEncoder.reset();

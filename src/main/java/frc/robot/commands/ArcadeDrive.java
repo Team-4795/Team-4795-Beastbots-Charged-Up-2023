@@ -9,8 +9,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import java.util.function.Supplier;
 
 public class ArcadeDrive extends CommandBase {
-
-
   private final Drivebase m_drivetrain;
   private final Supplier<Double> m_xaxisSpeedSupplier;
   private final Supplier<Double> m_zaxisRotateSupplier;

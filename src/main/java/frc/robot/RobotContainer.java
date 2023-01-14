@@ -61,24 +61,26 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-try{
+try {
   Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve("paths/output/Path.wpilib.json");
   Trajectory trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
     RamseteCommand ramseteCommand = new RamseteCommand(
-            trajectory,
-            m_drivebase::getPose,
-            new RamseteController(AutoConstants.kRamseteB, AutoConstants.kRamseteZeta),
-            new SimpleMotorFeedforward(
-                DrivebaseConstants.ksVolts,
-                DrivebaseConstants.kvVoltSecondsPerMeter,
-                DrivebaseConstants.kaVoltSecondsSquaredPerMeter),
-                DrivebaseConstants.kDriveKinematics,
-            m_drivebase::getWheelSpeeds,
-            new PIDController(DrivebaseConstants.kPDriveVel, 0, 0),
-            new PIDController(DrivebaseConstants.kPDriveVel, 0, 0),
-            // RamseteCommand passes volts to the callback
-            m_drivebase::tankDriveVolts,
-            m_drivebase);
+      trajectory,
+      m_drivebase::getPose,
+      new RamseteController(AutoConstants.kRamseteB, AutoConstants.kRamseteZeta),
+      new SimpleMotorFeedforward(
+        DrivebaseConstants.ksVolts,
+        DrivebaseConstants.kvVoltSecondsPerMeter,
+        DrivebaseConstants.kaVoltSecondsSquaredPerMeter
+      ),
+      DrivebaseConstants.kDriveKinematics,
+      m_drivebase::getWheelSpeeds,
+      new PIDController(DrivebaseConstants.kPDriveVel, 0, 0),
+      new PIDController(DrivebaseConstants.kPDriveVel, 0, 0),
+      // RamseteCommand passes volts to the callback
+      m_drivebase::tankDriveVolts,
+      m_drivebase
+    );
 
     // Reset odometry to the starting pose of the trajectory.
     m_drivebase.resetOdometry(trajectory.getInitialPose());
@@ -86,9 +88,10 @@ try{
     // Run path following command, then stop at the end.
     return ramseteCommand.andThen(() -> m_drivebase.tankDriveVolts(0, 0));
 
-   } catch (IOException ex) {
-     DriverStation.reportError("Unable to open trajectory: " + "paths/output/Path.wpilib.json", ex.getStackTrace());
-   }   
+    } catch (IOException ex) {
+      DriverStation.reportError("Unable to open trajectory: " + "paths/output/Path.wpilib.json", ex.getStackTrace());
+    }
+
     return null;
   }
 }

@@ -17,7 +17,6 @@ import edu.wpi.first.math.util.Units;
  */
 public final class Constants {
     public static final class DrivebaseConstants {
-        
         public static final double kTrackwidthMeters = 1.7864;
         public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
     
@@ -26,11 +25,9 @@ public final class Constants {
         public static final double kaVoltSecondsSquaredPerMeter = 0.237;
         public static final double kPDriveVel = 1.752;
       }
-      
-     
     
       public static final class AutoConstants {
-        public static final double kRamseteB = 2;
+        public static final double kRamseteB = 2.0;
         public static final double kRamseteZeta = 0.7;
       }
     
