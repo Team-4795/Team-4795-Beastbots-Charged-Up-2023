@@ -5,21 +5,23 @@
 package frc.robot.subsystems;
 
 
+import java.beans.Encoder;
+
+import com.kauailabs.navx.frc.AHRS;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.PWMTalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.DrivebaseConstants;
 
 public class Drivebase extends SubsystemBase {
-  /*
-  private final CANSparkMax leftLeader = new CANSparkMax(2, MotorType.kBrushless);
-  private final CANSparkMax leftFollower = new CANSparkMax(3, MotorType.kBrushless);
-  private final CANSparkMax leftFollowerTwo = new CANSparkMax(4, MotorType.kBrushless);
-
-  private final CANSparkMax rightLeader = new CANSparkMax(5, MotorType.kBrushless);
-  private final CANSparkMax rightFollower = new CANSparkMax(6, MotorType.kBrushless);
-  private final CANSparkMax rightFollowerTwo = new CANSparkMax(7, MotorType.kBrushless);
-  */
+ 
 
 private final PWMTalonSRX leftLeader = new PWMTalonSRX(2); 
 private final PWMTalonSRX leftFollower = new PWMTalonSRX(3); 
@@ -30,18 +32,32 @@ private final PWMTalonSRX rightFollower = new PWMTalonSRX(6);
 private final PWMTalonSRX rightFollowerTwo = new PWMTalonSRX(7); 
 
 private final DifferentialDrive diffDrive = new DifferentialDrive(leftLeader, rightLeader); 
+private final DifferentialDriveOdometry  odometry;
+private final AHRS gyro;
+private Pose2d currentGoal;
+
+private final Encoder m_leftEncoder = 
+   new Encoder(
+    
+   );
+
+private final Encoder m_rightEncoder = 
+   new Encoder(
+  
+   );
+
+
+  // private final RelativeEncoder m_rightEncoder;
+   //private final RelativeEncoder m_leftEncoder;
+ 
+
 
   public Drivebase() {
-   
-   //leftFollower.follow(leftLeader);
-    //leftFollowerTwo.follow(leftLeader);
-    //rightFollowerTwo.follow(rightLeader);
-   // rightFollower.follow(rightLeader);
 
-    //leftLeader.setIdleMode(IdleMode.kBrake);
-    //leftFollower.setIdleMode(IdleMode.kBrake);
-    //rightLeader.setIdleMode(IdleMode.kBrake);
-    //rightFollower.setIdleMode(IdleMode.kBrake);
+    gyro = new AHRS(SPI.Port.kMXP);
+
+    //m_leftEncoder = leftLeader.getEncoder();
+    //m_rightEncoder = rightLeader.getEncoder();
 
     leftLeader.setInverted(true);
     leftFollower.setInverted(true);
@@ -49,7 +65,7 @@ private final DifferentialDrive diffDrive = new DifferentialDrive(leftLeader, ri
     rightLeader.setInverted(false);
     rightFollower.setInverted(false);
     rightFollowerTwo.setInverted(false);
-
+    odometry =  new DifferentialDriveOdometry(gyro.getRotation2d());
   }
 
   public void arcadeDrive(double speed, double rotation) {
@@ -62,7 +78,33 @@ private final DifferentialDrive diffDrive = new DifferentialDrive(leftLeader, ri
     leftFollowerTwo.set(leftLeader.get());
     rightFollowerTwo.set(rightLeader.get());
   }
+
+  public Pose2d getPose(){
+    return odometry.getPoseMeters();
+  }
   
+  public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+    return new DifferentialDriveWheelSpeeds(m_leftEncoder.getVelocity(), m_rightEncoder.getVelocity());
+  }
+
+  public void tankDriveVolts(double leftVolts, double rightVolts) {
+    leftLeader.setVoltage(leftVolts);
+    rightLeader.setVoltage(rightVolts);
+    diffDrive.feed();
+   }
+
+
+   public void resetEncoders() {
+    m_leftEncoder.reset();
+    m_rightEncoder.reset();
+  }
+
+  public void resetOdometry(Pose2d pose) {
+    resetEncoders();
+    currentGoal = null;
+    odometry.resetPosition(pose, gyro.getRotation2d());
+  } 
+
   @Override
   public void periodic() {
     

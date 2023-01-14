@@ -4,11 +4,25 @@
 
 package frc.robot;
 
+import java.io.IOException;
+import java.nio.file.Path;
+
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.RamseteController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryUtil;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.Constants.AutoConstants;
+import frc.robot.Constants.DrivebaseConstants;
+
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.subsystems.Drivebase;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -47,6 +61,34 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
+try{
+  Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve("paths/output/Path.wpilib.json");
+  Trajectory trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+    RamseteCommand ramseteCommand = new RamseteCommand(
+            trajectory,
+            m_drivebase::getPose,
+            new RamseteController(AutoConstants.kRamseteB, AutoConstants.kRamseteZeta),
+            new SimpleMotorFeedforward(
+                DrivebaseConstants.ksVolts,
+                DrivebaseConstants.kvVoltSecondsPerMeter,
+                DrivebaseConstants.kaVoltSecondsSquaredPerMeter),
+                DrivebaseConstants.kDriveKinematics,
+            m_drivebase::getWheelSpeeds,
+            new PIDController(DrivebaseConstants.kPDriveVel, 0, 0),
+            new PIDController(DrivebaseConstants.kPDriveVel, 0, 0),
+            // RamseteCommand passes volts to the callback
+            m_drivebase::tankDriveVolts,
+            m_drivebase);
+
+    // Reset odometry to the starting pose of the trajectory.
+    m_drivebase.resetOdometry(trajectory.getInitialPose());
+
+    // Run path following command, then stop at the end.
+    return ramseteCommand.andThen(() -> m_drivebase.tankDriveVolts(0, 0));
+
+   } catch (IOException ex) {
+     DriverStation.reportError("Unable to open trajectory: " + "paths/output/Path.wpilib.json", ex.getStackTrace());
+   }   
     return null;
   }
 }
