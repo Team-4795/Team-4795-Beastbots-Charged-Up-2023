@@ -6,15 +6,8 @@ package frc.robot.subsystems;
 
 
 import com.revrobotics.CANSparkMax.IdleMode;
-
-//import com.revrobotics.CANSparkMax.IdleMode;
-//import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-
-//import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
 import edu.wpi.first.wpilibj.motorcontrol.PWMTalonSRX;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Drivebase extends SubsystemBase {
@@ -26,10 +19,7 @@ public class Drivebase extends SubsystemBase {
   private final CANSparkMax rightLeader = new CANSparkMax(5, MotorType.kBrushless);
   private final CANSparkMax rightFollower = new CANSparkMax(6, MotorType.kBrushless);
   private final CANSparkMax rightFollowerTwo = new CANSparkMax(7, MotorType.kBrushless);
-
   */
-
-
 
 private final PWMTalonSRX leftLeader = new PWMTalonSRX(2); 
 private final PWMTalonSRX leftFollower = new PWMTalonSRX(3); 
@@ -43,8 +33,6 @@ private final DifferentialDrive diffDrive = new DifferentialDrive(leftLeader, ri
 
   public Drivebase() {
    
-   
-
    //leftFollower.follow(leftLeader);
     //leftFollowerTwo.follow(leftLeader);
     //rightFollowerTwo.follow(rightLeader);
@@ -64,15 +52,17 @@ private final DifferentialDrive diffDrive = new DifferentialDrive(leftLeader, ri
 
   }
 
-  public void set_left(double speed){
-    leftFollower.set(speed);
-  }
-
   public void arcadeDrive(double speed, double rotation) {
     diffDrive.arcadeDrive(speed, rotation, false);
   }
 
-
+  public void spd(){
+    leftFollower.set(leftLeader.get());
+    rightFollower.set(rightLeader.get());
+    leftFollowerTwo.set(leftLeader.get());
+    rightFollowerTwo.set(rightLeader.get());
+  }
+  
   @Override
   public void periodic() {
     
