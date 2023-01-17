@@ -32,8 +32,8 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
  */
 public class RobotContainer {
   private final Drivebase m_drivebase = new Drivebase();
-  private final XboxController driverController = new XboxController(0);
-
+  //private final XboxController driverController = new XboxController(0);
+ private final GenericHID driverController = new GenericHID(0);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
@@ -41,8 +41,8 @@ public class RobotContainer {
 
     m_drivebase.setDefaultCommand(new ArcadeDrive(
       m_drivebase,
-      () -> driverController.getLeftY(),
-      () -> driverController.getRightX()
+      () -> driverController.getRawAxis(1),
+      () -> driverController.getRawAxis(4)
     ));
   }
 

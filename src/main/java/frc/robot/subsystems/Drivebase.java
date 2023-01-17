@@ -17,12 +17,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DrivebaseConstants;
 
 public class Drivebase extends SubsystemBase {
-  private final PWMTalonSRX leftLeader = new PWMTalonSRX(2); 
-  private final PWMTalonSRX leftFollower = new PWMTalonSRX(3); 
-  private final PWMTalonSRX leftFollowerTwo = new PWMTalonSRX(4); 
+  private final PWMTalonSRX leftLeader = new PWMTalonSRX(0); 
+  private final PWMTalonSRX leftFollower = new PWMTalonSRX(8); 
+  private final PWMTalonSRX leftFollowerTwo = new PWMTalonSRX(13); 
 
-  private final PWMTalonSRX rightLeader = new PWMTalonSRX(5); 
-  private final PWMTalonSRX rightFollower = new PWMTalonSRX(6); 
+  private final PWMTalonSRX rightLeader = new PWMTalonSRX(1); 
+  private final PWMTalonSRX rightFollower = new PWMTalonSRX(10); 
   private final PWMTalonSRX rightFollowerTwo = new PWMTalonSRX(7); 
 
   private final DifferentialDrive diffDrive = new DifferentialDrive(leftLeader, rightLeader); 
@@ -40,11 +40,11 @@ public class Drivebase extends SubsystemBase {
     //m_rightEncoder = rightLeader.getEncoder();
 
     leftLeader.setInverted(true);
-    leftFollower.setInverted(true);
-    leftFollowerTwo.setInverted(true);
+    //leftFollower.setInverted(true);
+    //leftFollowerTwo.setInverted(true);
     rightLeader.setInverted(false);
-    rightFollower.setInverted(false);
-    rightFollowerTwo.setInverted(false);
+    //rightFollower.setInverted(false);
+    //rightFollowerTwo.setInverted(false);
 
     odometry = new DifferentialDriveOdometry(gyro.getRotation2d());
   }
@@ -53,12 +53,13 @@ public class Drivebase extends SubsystemBase {
     diffDrive.arcadeDrive(speed, rotation, false);
   }
 
+  /* 
   public void spd(){
     leftFollower.set(leftLeader.get());
     rightFollower.set(rightLeader.get());
     leftFollowerTwo.set(leftLeader.get());
     rightFollowerTwo.set(rightLeader.get());
-  }
+  } */
 
   public Pose2d getPose(){
     return odometry.getPoseMeters();
