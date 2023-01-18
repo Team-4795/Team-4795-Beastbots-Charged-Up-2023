@@ -1,7 +1,7 @@
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
-``
+
 package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
@@ -36,15 +36,8 @@ public class Drivebase extends SubsystemBase {
   public Drivebase() {
     gyro = new AHRS(SPI.Port.kMXP);
 
-    //m_leftEncoder = leftLeader.getEncoder();
-    //m_rightEncoder = rightLeader.getEncoder();
-
     leftLeader.setInverted(true);
-    //leftFollower.setInverted(true);
-    //leftFollowerTwo.setInverted(true);
     rightLeader.setInverted(false);
-    //rightFollower.setInverted(false);
-    //rightFollowerTwo.setInverted(false);
 
     odometry = new DifferentialDriveOdometry(gyro.getRotation2d());
   }
@@ -52,14 +45,6 @@ public class Drivebase extends SubsystemBase {
   public void arcadeDrive(double speed, double rotation) {
     diffDrive.arcadeDrive(speed, rotation, false);
   }
-
-  /* 
-  public void spd(){
-    leftFollower.set(leftLeader.get());
-    rightFollower.set(rightLeader.get());
-    leftFollowerTwo.set(leftLeader.get());
-    rightFollowerTwo.set(rightLeader.get());
-  } */
 
   public Pose2d getPose(){
     return odometry.getPoseMeters();
