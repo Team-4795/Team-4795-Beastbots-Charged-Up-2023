@@ -5,6 +5,8 @@
 package frc.robot;
 
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.util.Units;
+
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -23,6 +25,12 @@ public final class Constants {
         public static final double kvVoltSecondsPerMeter = 1.282;
         public static final double kaVoltSecondsSquaredPerMeter = 0.237;
         public static final double kPDriveVel = 1.752;
+
+        public static final int LEFT_DRIVE_GROUP_CURRENT_LIMIT = 60;
+        public static final int RIGHT_DRIVE_GROUP_CURRENT_LIMIT = 60;
+
+        public static final double WHEEL_DIAMETER_METERS = Units.inchesToMeters(6);
+        public static final double GEARING = 10.0;
       }
     
       public static final class AutoConstants {
