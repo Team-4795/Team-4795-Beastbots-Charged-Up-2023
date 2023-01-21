@@ -26,7 +26,7 @@ public class Drivebase extends SubsystemBase {
   private final PWMTalonSRX rightFollowerTwo = new PWMTalonSRX(7); 
 
   private final DifferentialDrive diffDrive = new DifferentialDrive(leftLeader, rightLeader); 
-  private final DifferentialDriveOdometry  odometry;
+  private final DifferentialDriveOdometry odometry;
   private final AHRS gyro;
   private Pose2d currentGoal;
 
@@ -69,7 +69,7 @@ public class Drivebase extends SubsystemBase {
   public void resetOdometry(Pose2d pose) {
     resetEncoders();
     currentGoal = null;
-    odometry.resetPosition(pose, gyro.getRotation2d());
+    odometry.resetPosition(gyro.getRotation2d(), m_leftEncoder.getDistance(), m_rightEncoder.getDistance(), pose);
   } 
 
   @Override
