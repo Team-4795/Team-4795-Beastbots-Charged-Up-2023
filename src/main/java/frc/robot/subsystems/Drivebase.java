@@ -30,8 +30,8 @@ public class Drivebase extends SubsystemBase {
   private final AHRS gyro;
   private Pose2d currentGoal;
 
-  private final Encoder m_leftEncoder = new Encoder( );
-  private final Encoder m_rightEncoder = new Encoder( );
+  private final Encoder m_leftEncoder = new Encoder(0,1);
+  private final Encoder m_rightEncoder = new Encoder(2,3 );
  
   public Drivebase() {
     gyro = new AHRS(SPI.Port.kMXP);
@@ -49,9 +49,10 @@ public class Drivebase extends SubsystemBase {
   public Pose2d getPose(){
     return odometry.getPoseMeters();
   }
-  
+
+
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-    return new DifferentialDriveWheelSpeeds(m_leftEncoder.getVelocity(), m_rightEncoder.getVelocity());
+    return new DifferentialDriveWheelSpeeds(m_leftEncoder.getRate(), m_rightEncoder.getRate());
   }
 
   public void tankDriveVolts(double leftVolts, double rightVolts) {
