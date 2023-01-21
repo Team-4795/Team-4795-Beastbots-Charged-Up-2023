@@ -19,10 +19,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DrivebaseConstants;
 
-import com.pathplanner.lib.PathPlanner;
-import com.pathplanner.lib.PathPlannerTrajectory;
-
-
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.subsystems.Drivebase;
 import edu.wpi.first.wpilibj2.command.Command;
