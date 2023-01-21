@@ -5,7 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.revrobotics.RelativeEncoder;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
@@ -31,9 +31,6 @@ public class Drivebase extends SubsystemBase {
   private final DifferentialDriveOdometry odometry;
   private final AHRS gyro;
   private Pose2d currentGoal;
-
-  private final RelativeEncoder m_rightEncoder;
-  private final RelativeEncoder m_leftEncoder;
  
   public Drivebase() {
     leftFollower.follow(leftLeader);
@@ -50,22 +47,15 @@ public class Drivebase extends SubsystemBase {
     rightFollower.setInverted(false);
     rightFollowerTwo.setInverted(false);
 
-    m_leftEncoder = leftLeader.getEncoder();
-    m_rightEncoder = rightLeader.getEncoder();
-
-    m_leftEncoder.setVelocityConversionFactor((1.0 / 60.0 / DrivebaseConstants.GEARING) * DrivebaseConstants.WHEEL_DIAMETER_METERS * Math.PI);
-    m_rightEncoder.setVelocityConversionFactor((1.0 / 60.0 / DrivebaseConstants.GEARING) * DrivebaseConstants.WHEEL_DIAMETER_METERS * Math.PI);
-
     resetEncoders();
-
-    leftLeader.setSmartCurrentLimit(DrivebaseConstants.LEFT_DRIVE_GROUP_CURRENT_LIMIT);
-    rightLeader.setSmartCurrentLimit(DrivebaseConstants.RIGHT_DRIVE_GROUP_CURRENT_LIMIT);
 
     leftFollower.setSmartCurrentLimit(DrivebaseConstants.LEFT_DRIVE_GROUP_CURRENT_LIMIT);
     leftFollowerTwo.setSmartCurrentLimit(DrivebaseConstants.LEFT_DRIVE_GROUP_CURRENT_LIMIT);
     rightFollower.setSmartCurrentLimit(DrivebaseConstants.RIGHT_DRIVE_GROUP_CURRENT_LIMIT);
     rightFollowerTwo.setSmartCurrentLimit(DrivebaseConstants.RIGHT_DRIVE_GROUP_CURRENT_LIMIT);
 
+    rightLeader.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+    leftLeader.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
 
     odometry = new DifferentialDriveOdometry(gyro.getRotation2d());
   }
@@ -80,7 +70,7 @@ public class Drivebase extends SubsystemBase {
 
 
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-    return new DifferentialDriveWheelSpeeds(m_leftEncoder.getVelocity(), m_rightEncoder.getVelocity());
+    return new DifferentialDriveWheelSpeeds(leftLeader.getSelectedSensorVelocity(), rightLeader.getSelectedSensorVelocity());
   }
 
   public void tankDriveVolts(double leftVolts, double rightVolts) {
@@ -90,15 +80,15 @@ public class Drivebase extends SubsystemBase {
   }
 
   public void resetEncoders() {
-    m_leftEncoder.setPosition(0);
-    m_rightEncoder.setPosition(0);
+    rightLeader.setSelectedSensorPosition(0);
+    leftLeader.setSelectedSensorPosition(0);
   }
 
   public void resetOdometry(Pose2d pose) {
     resetEncoders();
 
-    double leftDistance = m_leftEncoder.getPosition() / DrivebaseConstants.GEARING * DrivebaseConstants.WHEEL_DIAMETER_METERS * Math.PI;
-    double rightDistance = m_rightEncoder.getPosition() / DrivebaseConstants.GEARING * DrivebaseConstants.WHEEL_DIAMETER_METERS * Math.PI;
+    double leftDistance = leftLeader.getSelectedSensorPosition();
+    double rightDistance = rightLeader.getSelectedSensorPosition();
 
     odometry.resetPosition(gyro.getRotation2d(), leftDistance, rightDistance, pose);
   } 
