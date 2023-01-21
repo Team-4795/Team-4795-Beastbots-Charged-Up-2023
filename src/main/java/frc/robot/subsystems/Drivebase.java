@@ -18,26 +18,24 @@ import frc.robot.Constants.DrivebaseConstants;
 
 public class Drivebase extends SubsystemBase {
   private final PWMTalonSRX leftLeader = new PWMTalonSRX(0); 
-  private final PWMTalonSRX leftFollower = new PWMTalonSRX(8); 
-  private final PWMTalonSRX leftFollowerTwo = new PWMTalonSRX(13); 
-
   private final PWMTalonSRX rightLeader = new PWMTalonSRX(1); 
-  private final PWMTalonSRX rightFollower = new PWMTalonSRX(10); 
-  private final PWMTalonSRX rightFollowerTwo = new PWMTalonSRX(7); 
 
   private final DifferentialDrive diffDrive = new DifferentialDrive(leftLeader, rightLeader); 
   private final DifferentialDriveOdometry  odometry;
   private final AHRS gyro;
   private Pose2d currentGoal;
 
-  private final Encoder m_leftEncoder = new Encoder( );
-  private final Encoder m_rightEncoder = new Encoder( );
+  private final Encoder m_leftEncoder = new Encoder(0, 1);
+  private final Encoder m_rightEncoder = new Encoder(2, 3);
  
   public Drivebase() {
     gyro = new AHRS(SPI.Port.kMXP);
 
     leftLeader.setInverted(true);
     rightLeader.setInverted(false);
+
+    // m_leftEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
+    // m_rightEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
 
     odometry = new DifferentialDriveOdometry(gyro.getRotation2d());
   }
@@ -51,7 +49,7 @@ public class Drivebase extends SubsystemBase {
   }
   
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-    return new DifferentialDriveWheelSpeeds(m_leftEncoder.getVelocity(), m_rightEncoder.getVelocity());
+    return new DifferentialDriveWheelSpeeds(m_leftEncoder.getRate(), m_rightEncoder.getRate());
   }
 
   public void tankDriveVolts(double leftVolts, double rightVolts) {
