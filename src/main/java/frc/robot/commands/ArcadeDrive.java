@@ -9,8 +9,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import java.util.function.Supplier;
 
 public class ArcadeDrive extends CommandBase {
-
-
   private final Drivebase m_drivetrain;
   private final Supplier<Double> m_xaxisSpeedSupplier;
   private final Supplier<Double> m_zaxisRotateSupplier;
@@ -41,7 +39,6 @@ public class ArcadeDrive extends CommandBase {
   @Override
   public void execute() {
     m_drivetrain.arcadeDrive(m_xaxisSpeedSupplier.get(), m_zaxisRotateSupplier.get());
-      m_drivetrain.spd();
   }
 
   // Called once the command ends or is interrupted.
