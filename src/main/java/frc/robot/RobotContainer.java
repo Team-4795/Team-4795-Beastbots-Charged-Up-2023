@@ -57,8 +57,8 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    final JoystickButton moveArmUp = new JoystickButton(driverController, 5); //Placeholder Number
-    final JoystickButton moveArmDown = new JoystickButton(driverController,6); //Placeholder Number
+    final JoystickButton moveArmUp = new JoystickButton(driverController, 5);
+    final JoystickButton moveArmDown = new JoystickButton(driverController,4); 
 
     moveArmUp.onTrue(new RunCommand(m_telescopeArm::extend));
     moveArmDown.onTrue(new RunCommand(m_telescopeArm::retract));
