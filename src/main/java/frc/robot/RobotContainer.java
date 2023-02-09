@@ -18,11 +18,14 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DrivebaseConstants;
+import frc.robot.subsystems.Telescope;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.subsystems.Drivebase;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -34,6 +37,7 @@ public class RobotContainer {
   private final Drivebase m_drivebase = new Drivebase();
   //private final XboxController driverController = new XboxController(0);
  private final GenericHID driverController = new GenericHID(0);
+ private final Telescope m_telescopeArm = new Telescope();
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
@@ -52,7 +56,14 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+    final JoystickButton moveArmUp = new JoystickButton(driverController, 5); //Placeholder Number
+    final JoystickButton moveArmDown = new JoystickButton(driverController,6); //Placeholder Number
+
+    moveArmUp.onTrue(new RunCommand(m_telescopeArm::extend));
+    moveArmDown.onTrue(new RunCommand(m_telescopeArm::retract));
+
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
