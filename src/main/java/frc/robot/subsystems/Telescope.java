@@ -6,14 +6,29 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Telescope extends SubsystemBase {
 
-    public Telescope() {
-      
+private final CANSparkMax Bob = new CANSparkMax(2, MotorType.kBrushless);
 
+
+    public Telescope() {
+
+    Bob.restoreFactoryDefaults();
+    Bob.setIdleMode(IdleMode.kBrake);
+    Bob.burnFlash();
+      
+    }
+
+    public void extend() {
+      Bob.set(0.25);
+    }
+
+    public void retract() {
+      Bob.set(-.25);
     }
 
   @Override
