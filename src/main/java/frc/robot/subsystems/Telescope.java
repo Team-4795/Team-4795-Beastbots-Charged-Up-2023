@@ -5,10 +5,15 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 
 public class Telescope extends SubsystemBase {
-  
-  public Telescope() {}
+  PWMSparkMax motor = new PWMSparkMax(2);
+
+    public Telescope() {
+      
+
+    }
 
   @Override
   public void periodic() {
