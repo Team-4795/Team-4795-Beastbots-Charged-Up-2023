@@ -11,29 +11,29 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Telescope extends SubsystemBase {
 
-private final CANSparkMax Bob = new CANSparkMax(2, MotorType.kBrushless);
+private final CANSparkMax bob = new CANSparkMax(2, MotorType.kBrushless);
 
     public Telescope() {
 
-    Bob.restoreFactoryDefaults();
-    Bob.setIdleMode(IdleMode.kBrake);
-    Bob.burnFlash();
+    bob.restoreFactoryDefaults();
+    bob.setIdleMode(IdleMode.kBrake);
+    bob.burnFlash();
       
     }
 
     public void extend() {
-      Bob.set(0.25);
+      bob.set(0.25);
     }
 
     public void retract() {
-      Bob.set(-.25);
+      bob.set(-.25);
     }
 
     public void setSoftLimit(){
-      Bob.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
-      Bob.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
-      Bob.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 0); //filler values for now
-      Bob.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, 0); //filler values for now
+      bob.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
+      bob.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
+      bob.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 0); //filler values for now
+      bob.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, 0); //filler values for now
 
     }
 
