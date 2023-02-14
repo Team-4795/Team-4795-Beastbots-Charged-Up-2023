@@ -15,17 +15,19 @@ import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DrivebaseConstants;
-import frc.robot.subsystems.Telescope;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.subsystems.Drivebase;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.subsystems.EndEffector;
+import frc.robot.subsystems.Telescope;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -34,15 +36,15 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  private final EndEffector m_intake = new EndEffector();
   private final Drivebase m_drivebase = new Drivebase();
+  private final Telescope m_telescopeArm = new Telescope();
   //private final XboxController driverController = new XboxController(0);
- private final GenericHID driverController = new GenericHID(0);
- private final Telescope m_telescopeArm = new Telescope();
+  private final GenericHID driverController = new GenericHID(0);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-
     m_drivebase.setDefaultCommand(new ArcadeDrive(
       m_drivebase,
       () -> driverController.getRawAxis(1),
@@ -57,12 +59,21 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    final JoystickButton moveArmUp = new JoystickButton(driverController, 5);
-    final JoystickButton moveArmDown = new JoystickButton(driverController,4); 
+    final JoystickButton ConeIntake = new JoystickButton(driverController,0);
+    final JoystickButton CubeIntake = new JoystickButton(driverController,1);
+    final JoystickButton moveArmUp = new JoystickButton(driverController,5);
+    final JoystickButton moveArmDown = new JoystickButton(driverController,4);
+    final JoystickButton ExtendArm = new JoystickButton(driverController,2);
+    final JoystickButton RetractArm = new JoystickButton(driverController,3);
 
-    moveArmUp.onTrue(new RunCommand(m_telescopeArm::extend));
-    moveArmDown.onTrue(new RunCommand(m_telescopeArm::retract));
-
+    moveArmUp.onTrue(new RunCommand(m_telescopeArm::LiftArm));
+    moveArmDown.onTrue(new RunCommand(m_telescopeArm::LowerArm));
+    ExtendArm.onTrue(new RunCommand(m_telescopeArm::extend));
+    RetractArm.onTrue(new RunCommand(m_telescopeArm::retract));
+    CubeIntake.onTrue(new RunCommand(m_intake::CubeIn));
+    CubeIntake.onFalse(new RunCommand(m_intake::CubeOut));
+    ConeIntake.onTrue(new RunCommand(m_intake::ConeIn));
+    ConeIntake.onFalse(new RunCommand(m_intake::ConeOut));
   }
 
   /**
