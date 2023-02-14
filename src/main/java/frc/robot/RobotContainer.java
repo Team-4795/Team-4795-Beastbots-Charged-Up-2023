@@ -15,7 +15,6 @@ import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DrivebaseConstants;
@@ -27,6 +26,7 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.EndEffector;
+import frc.robot.subsystems.RotaryArm;
 import frc.robot.subsystems.Telescope;
 
 /**
@@ -39,6 +39,7 @@ public class RobotContainer {
   private final EndEffector m_intake = new EndEffector();
   private final Drivebase m_drivebase = new Drivebase();
   private final Telescope m_telescopeArm = new Telescope();
+  private final RotaryArm m_rotaryarm = new RotaryArm();
   //private final XboxController driverController = new XboxController(0);
   private final GenericHID driverController = new GenericHID(0);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -66,8 +67,8 @@ public class RobotContainer {
     final JoystickButton ExtendArm = new JoystickButton(driverController,2);
     final JoystickButton RetractArm = new JoystickButton(driverController,3);
 
-    moveArmUp.onTrue(new RunCommand(m_telescopeArm::LiftArm));
-    moveArmDown.onTrue(new RunCommand(m_telescopeArm::LowerArm));
+    moveArmUp.onTrue(new RunCommand(m_rotaryarm::LiftArm));
+    moveArmDown.onTrue(new RunCommand(m_rotaryarm::LowerArm));
     ExtendArm.onTrue(new RunCommand(m_telescopeArm::extend));
     RetractArm.onTrue(new RunCommand(m_telescopeArm::retract));
     CubeIntake.onTrue(new RunCommand(m_intake::CubeIn));
