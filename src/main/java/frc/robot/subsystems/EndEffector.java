@@ -8,6 +8,7 @@ public class EndEffector {
     PWMSparkMax rmotor = new PWMSparkMax(1);
     private DoubleSolenoid solenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0 ,1);
     //Change null and motors later
+
     public void CubeIn(){
         double speed = 0.25;
         lmotor.set(speed);
@@ -16,6 +17,10 @@ public class EndEffector {
     public void ConeIn(){
         solenoid.set(DoubleSolenoid.Value.kForward);
     }
+    public void CubeStill(double speed){
+        lmotor.set(speed);
+        rmotor.set(speed);
+    }
     public void CubeOut(){
         double speed = 0.25;
         lmotor.set(-speed);
@@ -23,5 +28,8 @@ public class EndEffector {
     }
     public void ConeOut(){
         solenoid.set(DoubleSolenoid.Value.kReverse);
+    }
+    public void ConeStill(){
+        solenoid.set(DoubleSolenoid.Value.kOff);
     }
 }

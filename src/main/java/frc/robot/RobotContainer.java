@@ -22,6 +22,7 @@ import frc.robot.Constants.DrivebaseConstants;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.subsystems.Drivebase;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -51,6 +52,9 @@ public class RobotContainer {
       () -> driverController.getRawAxis(1),
       () -> driverController.getRawAxis(4)
     ));
+
+    m_intake.setDefaultCommand(new RunCommand(() -> m_intake.CubeStill(0), m_intake));
+    m_intake.setDefaultCommand(new RunCommand(() -> m_intake.ConeStill(), m_intake));
   }
 
   /**
@@ -62,19 +66,22 @@ public class RobotContainer {
   private void configureButtonBindings() {
     final JoystickButton ConeIntake = new JoystickButton(driverController,0);
     final JoystickButton CubeIntake = new JoystickButton(driverController,1);
+    final JoystickButton ConeOutake = new JoystickButton(driverController,6);
+    final JoystickButton CubeOutake = new JoystickButton(driverController,7);
     final JoystickButton moveArmUp = new JoystickButton(driverController,5);
     final JoystickButton moveArmDown = new JoystickButton(driverController,4);
     final JoystickButton ExtendArm = new JoystickButton(driverController,2);
     final JoystickButton RetractArm = new JoystickButton(driverController,3);
 
-    moveArmUp.onTrue(new RunCommand(m_rotaryarm::LiftArm));
-    moveArmDown.onTrue(new RunCommand(m_rotaryarm::LowerArm));
-    ExtendArm.onTrue(new RunCommand(m_telescopeArm::extend));
-    RetractArm.onTrue(new RunCommand(m_telescopeArm::retract));
-    CubeIntake.onTrue(new RunCommand(m_intake::CubeIn));
-    CubeIntake.onFalse(new RunCommand(m_intake::CubeOut));
-    ConeIntake.onTrue(new RunCommand(m_intake::ConeIn));
-    ConeIntake.onFalse(new RunCommand(m_intake::ConeOut));
+    moveArmUp.whileTrue(new RunCommand(m_rotaryarm::LiftArm));
+    moveArmDown.whileTrue(new RunCommand(m_rotaryarm::LowerArm));
+    ExtendArm.whileTrue(new RunCommand(m_telescopeArm::extend));
+    RetractArm.whileTrue(new RunCommand(m_telescopeArm::retract));
+    CubeIntake.whileTrue(new RunCommand(m_intake::CubeIn));
+    CubeOutake.whileTrue(new RunCommand(m_intake::CubeOut));
+    ConeIntake.whileTrue(new InstantCommand(m_intake::ConeIn));
+    ConeOutake.whileTrue(new InstantCommand(m_intake::ConeOut));
+
   }
 
   /**

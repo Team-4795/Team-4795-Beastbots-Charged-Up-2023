@@ -15,9 +15,9 @@ private final CANSparkMax bob = new CANSparkMax(2, MotorType.kBrushless);
 
     public Telescope() {
 
-    bob.restoreFactoryDefaults(); 
-    bob.setIdleMode(IdleMode.kBrake);
-    bob.burnFlash();
+      bob.restoreFactoryDefaults(); 
+      bob.setIdleMode(IdleMode.kBrake);
+      bob.burnFlash();
       
     }
 
