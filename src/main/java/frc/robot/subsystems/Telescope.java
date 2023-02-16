@@ -15,7 +15,7 @@ private final CANSparkMax bob = new CANSparkMax(2, MotorType.kBrushless);
 
     public Telescope() {
 
-    bob.restoreFactoryDefaults();
+    bob.restoreFactoryDefaults(); 
     bob.setIdleMode(IdleMode.kBrake);
     bob.burnFlash();
       
@@ -31,8 +31,8 @@ private final CANSparkMax bob = new CANSparkMax(2, MotorType.kBrushless);
     public void setSoftLimit(){
       bob.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
       bob.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
-      bob.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 0); //filler values for now
-      bob.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, 0); //filler values for now
+      bob.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 108); //54 holes (roughly), 12 tooth sprocket, 28:1 gear reduction = 108(?)
+      bob.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, 0); 
 
     }
 
