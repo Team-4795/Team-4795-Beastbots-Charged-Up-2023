@@ -17,15 +17,16 @@ import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstrai
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DrivebaseConstants;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 public class Drivebase extends SubsystemBase {
   private final WPI_TalonSRX leftLeader = new WPI_TalonSRX(1);
   private final WPI_TalonSRX leftFollower = new WPI_TalonSRX(2);
-  private final WPI_TalonSRX leftFollowerTwo = new WPI_TalonSRX(3);
+  private final VictorSPX leftFollowerTwo = new VictorSPX(3);
 
   private final WPI_TalonSRX rightLeader = new WPI_TalonSRX(4);
-  private final WPI_TalonSRX rightFollower = new WPI_TalonSRX(5);
-  private final WPI_TalonSRX rightFollowerTwo = new WPI_TalonSRX(6);
+  private final VictorSPX rightFollower = new VictorSPX(5);
+  private final VictorSPX rightFollowerTwo = new VictorSPX(6);
 
   private final DifferentialDrive diffDrive = new DifferentialDrive(leftLeader, rightLeader); 
   private final DifferentialDriveOdometry odometry;
@@ -41,11 +42,11 @@ public class Drivebase extends SubsystemBase {
     gyro = new AHRS(SPI.Port.kMXP);
 
     leftLeader.setInverted(true);
-    leftFollower.setInverted(true);
+    leftFollower.setInverted(false);
     leftFollowerTwo.setInverted(true);
-    rightLeader.setInverted(false);
+    rightLeader.setInverted(true);
     rightFollower.setInverted(false);
-    rightFollowerTwo.setInverted(false);
+    rightFollowerTwo.setInverted(true);
 
     resetEncoders();
 
