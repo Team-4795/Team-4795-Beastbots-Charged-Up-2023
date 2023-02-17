@@ -19,13 +19,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DrivebaseConstants;
 
 public class Drivebase extends SubsystemBase {
-  private final WPI_TalonSRX leftLeader = new WPI_TalonSRX(0);
-  private final WPI_TalonSRX leftFollower = new WPI_TalonSRX(8);
-  private final WPI_TalonSRX leftFollowerTwo = new WPI_TalonSRX(13);
+  private final WPI_TalonSRX leftLeader = new WPI_TalonSRX(1);
+  private final WPI_TalonSRX leftFollower = new WPI_TalonSRX(2);
+  private final WPI_TalonSRX leftFollowerTwo = new WPI_TalonSRX(3);
 
-  private final WPI_TalonSRX rightLeader = new WPI_TalonSRX(1);
-  private final WPI_TalonSRX rightFollower = new WPI_TalonSRX(10);
-  private final WPI_TalonSRX rightFollowerTwo = new WPI_TalonSRX(7);
+  private final WPI_TalonSRX rightLeader = new WPI_TalonSRX(4);
+  private final WPI_TalonSRX rightFollower = new WPI_TalonSRX(5);
+  private final WPI_TalonSRX rightFollowerTwo = new WPI_TalonSRX(6);
 
   private final DifferentialDrive diffDrive = new DifferentialDrive(leftLeader, rightLeader); 
   private final DifferentialDriveOdometry odometry;

@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class RotaryArm extends SubsystemBase {
-    private final CANSparkMax BaseMotor = new CANSparkMax(4, MotorType.kBrushless);
+    private final CANSparkMax BaseMotor = new CANSparkMax(7, MotorType.kBrushless);
     private RelativeEncoder m_encoder;
 
     public RotaryArm() {

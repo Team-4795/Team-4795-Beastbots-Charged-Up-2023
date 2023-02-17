@@ -41,6 +41,7 @@ public class RobotContainer {
   private final Drivebase m_drivebase = new Drivebase();
   private final Telescope m_telescopeArm = new Telescope();
   private final RotaryArm m_rotaryarm = new RotaryArm();
+
   //private final XboxController driverController = new XboxController(0);
   private final GenericHID driverController = new GenericHID(0);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -53,9 +54,8 @@ public class RobotContainer {
       () -> driverController.getRawAxis(4)
     ));
 
-    m_intake.setDefaultCommand(new RunCommand(() -> m_intake.CubeStill(0), m_intake));
-    m_intake.setDefaultCommand(new RunCommand(() -> m_intake.ConeStill(), m_intake));
   }
+
 
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
@@ -64,10 +64,8 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    final JoystickButton ConeIntake = new JoystickButton(driverController,0);
-    final JoystickButton CubeIntake = new JoystickButton(driverController,1);
-    final JoystickButton ConeOutake = new JoystickButton(driverController,6);
-    final JoystickButton CubeOutake = new JoystickButton(driverController,7);
+    final JoystickButton intakeButton = new JoystickButton(driverController,0);
+    final JoystickButton outakeButton = new JoystickButton(driverController,6);
     final JoystickButton moveArmUp = new JoystickButton(driverController,5);
     final JoystickButton moveArmDown = new JoystickButton(driverController,4);
     final JoystickButton ExtendArm = new JoystickButton(driverController,2);
@@ -77,10 +75,8 @@ public class RobotContainer {
     moveArmDown.whileTrue(new RunCommand(m_rotaryarm::LowerArm));
     ExtendArm.whileTrue(new RunCommand(m_telescopeArm::extend));
     RetractArm.whileTrue(new RunCommand(m_telescopeArm::retract));
-    CubeIntake.whileTrue(new RunCommand(m_intake::CubeIn));
-    CubeOutake.whileTrue(new RunCommand(m_intake::CubeOut));
-    ConeIntake.whileTrue(new InstantCommand(m_intake::ConeIn));
-    ConeOutake.whileTrue(new InstantCommand(m_intake::ConeOut));
+    intakeButton.whileTrue(new InstantCommand(m_intake::Intake));
+    outakeButton.whileTrue(new InstantCommand(m_intake::Outake));
 
   }
 

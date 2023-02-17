@@ -11,7 +11,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Telescope extends SubsystemBase {
 
-private final CANSparkMax bob = new CANSparkMax(2, MotorType.kBrushless);
+private final CANSparkMax bob = new CANSparkMax(8, MotorType.kBrushless);
 
     public Telescope() {
 
