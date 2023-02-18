@@ -65,12 +65,12 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    final JoystickButton intakeButton = new JoystickButton(driverController,0);
-    final JoystickButton outakeButton = new JoystickButton(driverController,6);
-    final JoystickButton moveArmUp = new JoystickButton(driverController,5);
-    final JoystickButton moveArmDown = new JoystickButton(driverController,4);
-    final JoystickButton ExtendArm = new JoystickButton(driverController,2);
-    final JoystickButton RetractArm = new JoystickButton(driverController,3);
+    final JoystickButton intakeButton = new JoystickButton(driverController,1);
+    final JoystickButton outakeButton = new JoystickButton(driverController,2);
+    final JoystickButton moveArmUp = new JoystickButton(driverController,8);
+    final JoystickButton moveArmDown = new JoystickButton(driverController,7);
+    final JoystickButton ExtendArm = new JoystickButton(driverController,6);
+    final JoystickButton RetractArm = new JoystickButton(driverController,5);
 
     moveArmUp.whileTrue(new RunCommand(m_rotaryarm::LiftArm));
     moveArmDown.whileTrue(new RunCommand(m_rotaryarm::LowerArm));
