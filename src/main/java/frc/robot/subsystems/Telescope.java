@@ -28,6 +28,15 @@ private final CANSparkMax bob = new CANSparkMax(8, MotorType.kBrushless);
     public void retract() {
       bob.set(-.25);
     }
+
+    public void start() {
+      bob.set(0.25);
+    }
+
+    public void stop(){
+      bob.set(0);
+    }
+
     public void setSoftLimit(){
       bob.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
       bob.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);

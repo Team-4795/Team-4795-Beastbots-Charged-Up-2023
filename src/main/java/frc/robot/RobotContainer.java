@@ -55,6 +55,11 @@ public class RobotContainer {
       () -> driverController.getRawAxis(2)
     ));
 
+    m_telescopeArm.setDefaultCommand(new RunCommand(
+      () -> m_telescopeArm.stop(),
+      m_telescopeArm
+    ));
+
   }
 
 
@@ -69,11 +74,13 @@ public class RobotContainer {
     final JoystickButton outakeButton = new JoystickButton(driverController,2);
     final JoystickButton moveArmUp = new JoystickButton(driverController,8);
     final JoystickButton moveArmDown = new JoystickButton(driverController,7);
+    final JoystickButton stopArm = new JoystickButton(driverController, 4);
     final JoystickButton ExtendArm = new JoystickButton(driverController,6);
     final JoystickButton RetractArm = new JoystickButton(driverController,5);
 
     moveArmUp.whileTrue(new RunCommand(m_rotaryarm::LiftArm));
     moveArmDown.whileTrue(new RunCommand(m_rotaryarm::LowerArm));
+    stopArm.whileTrue(new RunCommand(m_rotaryarm::stopArm));
     ExtendArm.whileTrue(new RunCommand(m_telescopeArm::extend));
     RetractArm.whileTrue(new RunCommand(m_telescopeArm::retract));
     intakeButton.whileTrue(new InstantCommand(m_intake::Intake));

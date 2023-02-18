@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -25,5 +26,17 @@ public class RotaryArm extends SubsystemBase {
 
     public void LiftArm(){
       BaseMotor.set(0.1);
+    }
+
+    public void stopArm(){
+      BaseMotor.set(0);
+    }
+
+    public void setSoftLimits(){
+      BaseMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
+      BaseMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
+
+      BaseMotor.setSoftLimit(SoftLimitDirection.kForward, 160);
+      BaseMotor.setSoftLimit(SoftLimitDirection.kReverse, 0);
     }
 }
