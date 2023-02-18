@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DrivebaseConstants;
+import edu.wpi.first.wpilibj.PS4Controller;
 
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.subsystems.Drivebase;
@@ -51,7 +52,7 @@ public class RobotContainer {
     m_drivebase.setDefaultCommand(new ArcadeDrive(
       m_drivebase,
       () -> driverController.getRawAxis(1),
-      () -> driverController.getRawAxis(4)
+      () -> driverController.getRawAxis(2)
     ));
 
   }
@@ -60,7 +61,7 @@ public class RobotContainer {
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
+   * edu.wpi.first.wpilibj.Joystick} or {@link PS4Controller}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {

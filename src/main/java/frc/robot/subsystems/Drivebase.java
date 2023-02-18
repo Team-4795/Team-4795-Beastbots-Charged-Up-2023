@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 import com.kauailabs.navx.frc.AHRS;
@@ -22,11 +23,11 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 public class Drivebase extends SubsystemBase {
   private final WPI_TalonSRX leftLeader = new WPI_TalonSRX(1);
   private final WPI_TalonSRX leftFollower = new WPI_TalonSRX(2);
-  private final VictorSPX leftFollowerTwo = new VictorSPX(3);
+  private final WPI_VictorSPX leftFollowerTwo = new WPI_VictorSPX(3);
 
   private final WPI_TalonSRX rightLeader = new WPI_TalonSRX(4);
-  private final VictorSPX rightFollower = new VictorSPX(5);
-  private final VictorSPX rightFollowerTwo = new VictorSPX(6);
+  private final WPI_VictorSPX rightFollower = new WPI_VictorSPX(5);
+  private final WPI_VictorSPX rightFollowerTwo = new WPI_VictorSPX(6);
 
   private final DifferentialDrive diffDrive = new DifferentialDrive(leftLeader, rightLeader); 
   private final DifferentialDriveOdometry odometry;
@@ -42,10 +43,10 @@ public class Drivebase extends SubsystemBase {
     gyro = new AHRS(SPI.Port.kMXP);
 
     leftLeader.setInverted(true);
-    leftFollower.setInverted(false);
+    leftFollower.setInverted(true);
     leftFollowerTwo.setInverted(true);
     rightLeader.setInverted(true);
-    rightFollower.setInverted(false);
+    rightFollower.setInverted(true);
     rightFollowerTwo.setInverted(true);
 
     resetEncoders();
