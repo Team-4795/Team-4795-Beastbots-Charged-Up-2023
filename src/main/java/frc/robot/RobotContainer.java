@@ -15,7 +15,7 @@ import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.XboxController;
+//import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DrivebaseConstants;
 import edu.wpi.first.wpilibj.PS4Controller;
@@ -83,8 +83,8 @@ public class RobotContainer {
     stopArm.whileTrue(new RunCommand(m_rotaryarm::stopArm));
     ExtendArm.whileTrue(new RunCommand(m_telescopeArm::extend));
     RetractArm.whileTrue(new RunCommand(m_telescopeArm::retract));
-    intakeButton.whileTrue(new InstantCommand(m_intake::Intake));
-    outakeButton.whileTrue(new InstantCommand(m_intake::Outake));
+    intakeButton.onTrue(new InstantCommand(m_intake::intake));
+    outakeButton.onTrue(new InstantCommand(m_intake::outake));
 
   }
 

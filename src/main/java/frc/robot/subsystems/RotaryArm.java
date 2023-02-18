@@ -21,11 +21,11 @@ public class RotaryArm extends SubsystemBase {
     }
 
     public void LowerArm(){
-      BaseMotor.set(-0.1);
+      BaseMotor.set(-0.4);
     }
 
     public void LiftArm(){
-      BaseMotor.set(0.1);
+      BaseMotor.set(0.4);
     }
 
     public void stopArm(){
