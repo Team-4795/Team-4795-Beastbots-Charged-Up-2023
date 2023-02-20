@@ -42,12 +42,12 @@ public class Drivebase extends SubsystemBase {
 
     gyro = new AHRS(SPI.Port.kMXP);
 
-    leftLeader.setInverted(true);
-    leftFollower.setInverted(true);
-    leftFollowerTwo.setInverted(true);
-    rightLeader.setInverted(true);
-    rightFollower.setInverted(true);
-    rightFollowerTwo.setInverted(true);
+    leftLeader.setInverted(false);
+    leftFollower.setInverted(false);
+    leftFollowerTwo.setInverted(false);
+    rightLeader.setInverted(false);
+    rightFollower.setInverted(false);
+    rightFollowerTwo.setInverted(false);
 
     resetEncoders();
 

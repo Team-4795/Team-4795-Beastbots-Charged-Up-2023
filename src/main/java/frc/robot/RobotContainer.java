@@ -45,6 +45,9 @@ public class RobotContainer {
 
   //private final XboxController driverController = new XboxController(0);
   private final GenericHID driverController = new GenericHID(0);
+  private final GenericHID operatorController = new GenericHID(1);
+  //Placeholder Value
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
@@ -72,11 +75,11 @@ public class RobotContainer {
   private void configureButtonBindings() {
     final JoystickButton intakeButton = new JoystickButton(driverController,1);
     final JoystickButton outakeButton = new JoystickButton(driverController,2);
-    final JoystickButton moveArmUp = new JoystickButton(driverController,8);
-    final JoystickButton moveArmDown = new JoystickButton(driverController,7);
-    final JoystickButton stopArm = new JoystickButton(driverController, 4);
-    final JoystickButton ExtendArm = new JoystickButton(driverController,6);
-    final JoystickButton RetractArm = new JoystickButton(driverController,5);
+    final JoystickButton moveArmUp = new JoystickButton(operatorController,8);
+    final JoystickButton moveArmDown = new JoystickButton(operatorController,7);
+    final JoystickButton stopArm = new JoystickButton(operatorController, 4);
+    final JoystickButton ExtendArm = new JoystickButton(operatorController,6);
+    final JoystickButton RetractArm = new JoystickButton(operatorController,5);
 
     moveArmUp.whileTrue(new RunCommand(m_rotaryarm::LiftArm));
     moveArmDown.whileTrue(new RunCommand(m_rotaryarm::LowerArm));
