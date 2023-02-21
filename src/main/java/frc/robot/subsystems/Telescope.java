@@ -33,6 +33,10 @@ private final CANSparkMax bob = new CANSparkMax(8, MotorType.kBrushless);
       bob.set(0.25);
     }
 
+    public void moveTelescopeArm(double speed){
+      bob.set(speed);
+    }
+
     public void stop(){
       bob.set(0);
     }

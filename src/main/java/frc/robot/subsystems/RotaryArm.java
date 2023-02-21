@@ -20,12 +20,8 @@ public class RotaryArm extends SubsystemBase {
       SmartDashboard.putNumber("Encoder Velocity", m_encoder.getVelocity());
     }
 
-    public void LowerArm(){
-      BaseMotor.set(-0.4);
-    }
-
-    public void LiftArm(){
-      BaseMotor.set(0.4);
+    public void moveArm(double speed){
+      BaseMotor.set(speed);
     }
 
     public void stopArm(){

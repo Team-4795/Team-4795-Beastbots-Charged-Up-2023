@@ -63,6 +63,14 @@ public class RobotContainer {
       m_telescopeArm
     ));
 
+    m_rotaryarm.setDefaultCommand(new RunCommand(
+      () -> m_rotaryarm.moveArm(operatorController.getRawAxis(1)), m_rotaryarm
+    ));
+
+    m_telescopeArm.setDefaultCommand(new RunCommand(
+      () -> m_telescopeArm.moveTelescopeArm(operatorController.getRawAxis(2)), m_telescopeArm
+    ));
+
   }
 
 
@@ -73,19 +81,20 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+
     final JoystickButton intakeButton = new JoystickButton(driverController,1);
     final JoystickButton outakeButton = new JoystickButton(driverController,2);
-    final JoystickButton moveArmUp = new JoystickButton(operatorController,8);
-    final JoystickButton moveArmDown = new JoystickButton(operatorController,7);
-    final JoystickButton stopArm = new JoystickButton(operatorController, 4);
-    final JoystickButton ExtendArm = new JoystickButton(operatorController,6);
-    final JoystickButton RetractArm = new JoystickButton(operatorController,5);
 
-    moveArmUp.whileTrue(new RunCommand(m_rotaryarm::LiftArm));
-    moveArmDown.whileTrue(new RunCommand(m_rotaryarm::LowerArm));
+    final JoystickButton stopArm = new JoystickButton(operatorController, 4);
+    //final JoystickButton ExtendArm = new JoystickButton(operatorController,6);
+    //final JoystickButton RetractArm = new JoystickButton(operatorController,5);
+
+
     stopArm.whileTrue(new RunCommand(m_rotaryarm::stopArm));
-    ExtendArm.whileTrue(new RunCommand(m_telescopeArm::extend));
-    RetractArm.whileTrue(new RunCommand(m_telescopeArm::retract));
+    
+    //ExtendArm.whileTrue(new RunCommand(m_telescopeArm::extend));
+    //RetractArm.whileTrue(new RunCommand(m_telescopeArm::retract));
+
     intakeButton.onTrue(new InstantCommand(m_intake::intake));
     outakeButton.onTrue(new InstantCommand(m_intake::outake));
 
