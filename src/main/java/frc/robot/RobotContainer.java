@@ -60,21 +60,23 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    final JoystickButton ConeIntake = new JoystickButton(driverController,0);
+    final JoystickButton ConeIntake = new JoystickButton(driverController,5);
     final JoystickButton CubeIntake = new JoystickButton(driverController,1);
-    final JoystickButton moveArmUp = new JoystickButton(driverController,5);
-    final JoystickButton moveArmDown = new JoystickButton(driverController,4);
-    final JoystickButton ExtendArm = new JoystickButton(driverController,2);
-    final JoystickButton RetractArm = new JoystickButton(driverController,3);
+    final JoystickButton CubeOut = new JoystickButton(driverController,6);
+    final JoystickButton ConeOut = new JoystickButton(driverController,2);
+    final JoystickButton moveArmUp = new JoystickButton(driverController,2);
+    final JoystickButton moveArmDown = new JoystickButton(driverController,3);
+    final JoystickButton ExtendArm = new JoystickButton(driverController,3);
+    final JoystickButton RetractArm = new JoystickButton(driverController,4);
 
-    moveArmUp.onTrue(new RunCommand(m_rotaryarm::LiftArm));
-    moveArmDown.onTrue(new RunCommand(m_rotaryarm::LowerArm));
-    ExtendArm.onTrue(new RunCommand(m_telescopeArm::extend));
-    RetractArm.onTrue(new RunCommand(m_telescopeArm::retract));
-    CubeIntake.onTrue(new RunCommand(m_intake::CubeIn));
-    CubeIntake.onFalse(new RunCommand(m_intake::CubeOut));
-    ConeIntake.onTrue(new RunCommand(m_intake::ConeIn));
-    ConeIntake.onFalse(new RunCommand(m_intake::ConeOut));
+    moveArmUp.whileTrue(new RunCommand(m_rotaryarm::LiftArm));
+    moveArmDown.whileTrue(new RunCommand(m_rotaryarm::LowerArm));
+    ExtendArm.whileTrue(new RunCommand(m_telescopeArm::extend));
+    RetractArm.whileTrue(new RunCommand(m_telescopeArm::retract));
+    CubeIntake.whileTrue(new RunCommand(m_intake::CubeIn));
+    ConeIntake.whileTrue(new RunCommand(m_intake::ConeIn));
+    CubeOut.whileTrue(new RunCommand(m_intake::CubeOut));
+    ConeOut.whileTrue(new RunCommand(m_intake::ConeOut));
   }
 
   /**
