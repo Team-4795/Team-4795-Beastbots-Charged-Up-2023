@@ -7,6 +7,7 @@ package frc.robot;
 import java.io.IOException;
 import java.nio.file.Path;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -58,17 +59,16 @@ public class RobotContainer {
       () -> driverController.getRawAxis(2)
     ));
 
-    m_telescopeArm.setDefaultCommand(new RunCommand(
-      () -> m_telescopeArm.stop(),
-      m_telescopeArm
-    ));
-
     m_rotaryarm.setDefaultCommand(new RunCommand(
-      () -> m_rotaryarm.moveArm(operatorController.getRawAxis(1)), m_rotaryarm
+      () -> m_rotaryarm.moveArm(
+          MathUtil.applyDeadband(operatorController.getRawAxis(1), 0.05)), 
+          m_rotaryarm
     ));
 
     m_telescopeArm.setDefaultCommand(new RunCommand(
-      () -> m_telescopeArm.moveTelescopeArm(operatorController.getRawAxis(2)), m_telescopeArm
+      () -> m_telescopeArm.moveTelescopeArm(
+          MathUtil.applyDeadband(operatorController.getRawAxis(2), 0.05)), 
+          m_telescopeArm
     ));
 
   }
