@@ -16,7 +16,9 @@ import edu.wpi.first.math.util.Units;
  * <p>It is advised to statically import this class (or one of its inner classes) wherever the
  * constants are needed, to reduce verbosity.
  */
+
 public final class Constants {
+    
     public static final class DrivebaseConstants {
         public static final double kTrackwidthMeters = 1.7864;
         public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
@@ -31,6 +33,28 @@ public final class Constants {
 
         public static final double WHEEL_DIAMETER_METERS = Units.inchesToMeters(6);
         public static final double GEARING = 10.0;
+
+      //will make arm constants 
+
+      }
+      public static final class RotaryConstants {
+        public static final double kp = 0; 
+        public static final double ki = 0;
+        public static final double kd = 0;
+        public static final double kFF = 0;
+
+        public static final double kMinOutput = 0;  
+        public static final double kMaxOutput = 0;  
+
+        public static final double kRampRate = 0;
+        
+        public static final double ConversionFactor = 1;
+        public static final int kCurrentLimit = 0;
+        public static final double kGearing = 0;
+        public static final float kForwardLimit = 0;
+        public static final float kReverseLimit = 0;
+        public static final boolean kEnableReverseLimit = false;
+        public static final boolean kEnableForwardLimit = false;
       }
     
       public static final class AutoConstants {
