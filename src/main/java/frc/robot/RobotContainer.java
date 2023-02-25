@@ -20,11 +20,12 @@ import edu.wpi.first.wpilibj.GenericHID;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DrivebaseConstants;
 import edu.wpi.first.wpilibj.PS4Controller;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.subsystems.Drivebase;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -65,10 +66,17 @@ public class RobotContainer {
           m_rotaryarm
     ));
 
-    m_telescopeArm.setDefaultCommand(new RunCommand(
+    m_telescopeArm.setDefaultCommand(
+      
+    new ParallelCommandGroup(
+      
+   new RunCommand(
       () -> m_telescopeArm.moveTelescopeArm(
-          MathUtil.applyDeadband(operatorController.getRawAxis(2), 0.05)), 
+          MathUtil.applyDeadband(operatorController.getRawAxis(5), 0.05)), 
           m_telescopeArm
+    ),
+    
+    new InstantCommand( () -> SmartDashboard.putNumber("telescope arm absoulte", m_telescopeArm.TelescopeEncoder.getPosition()))
     ));
 
   }
