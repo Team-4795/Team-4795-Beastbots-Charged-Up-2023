@@ -61,6 +61,10 @@ public class Drivebase extends SubsystemBase {
     diffDrive.arcadeDrive(speed, rotation, false);
   }
 
+  public void curvatureDrive(double speed, double rotation, boolean quickTurn){
+    diffDrive.curvatureDrive(speed, rotation, quickTurn);
+  }
+
   public Pose2d getPose(){
     return odometry.getPoseMeters();
   }

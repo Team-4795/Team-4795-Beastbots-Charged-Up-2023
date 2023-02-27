@@ -26,8 +26,6 @@ public final AbsoluteEncoder TelescopeEncoder;
       bob.restoreFactoryDefaults(); 
       bob.setIdleMode(IdleMode.kBrake);
       bob.burnFlash();
-    
-      
     }
     
     public void extend() {
@@ -50,7 +48,7 @@ public final AbsoluteEncoder TelescopeEncoder;
       bob.set(0);
       }
 
-      if (TelescopeEncoder.getPosition()<1 && speed<0)
+      else if (TelescopeEncoder.getPosition()<1 && speed<0)
       {
 
       bob.set(0);
@@ -76,6 +74,6 @@ public final AbsoluteEncoder TelescopeEncoder;
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-   
+    SmartDashboard.putNumber("Telescope Arm Absolute", TelescopeEncoder.getPosition());
   }
 }

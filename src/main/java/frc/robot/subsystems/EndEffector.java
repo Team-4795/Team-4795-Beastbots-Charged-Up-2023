@@ -21,6 +21,6 @@ public class EndEffector extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putString("pneumatics state",solenoid.get().toString());
+        SmartDashboard.putString("pneumatics state", solenoid.get().toString());
     }
 }
